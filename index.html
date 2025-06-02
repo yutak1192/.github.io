@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ＲＯＵＬＥＴＴＥ</title>
+    <link rel="stylesheet" href="../技術検証2/CSS/roulette.CSS">
+</head>
+<body>
+    <div class="top">
+        <h1>へたっぴさ　欲望の解放のさせ方が下手</h1>
+        
+    <h4 class="info">ルーレットを当てて手持ちを増やし、地下から脱出しよう</h4>
+        <br>
+        <h3>貴方の手持ち額:</h3>
+        <h3 ><span id="yourMoney">10000</span>円</h3>
+        
+        <p>掛け金を入力してください</p>
+        <label>
+            <input type="number" id="bet" min="1" value="1000"><br>
+        </label>
+        
+       <h3>
+           掛ける目を選択して下さい
+       </h3>
+
+        <h6>賭ける目の値が大きいほど当たりづらく、リターンが大きくなります</h6>
+        <label for="select_bet">
+            <select id="selected_bet" name="choise">
+            <option value="1">1</option>
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+		</select></label><br>
+        
+        <button onclick="startRoulette()" id="start">スタート</button>
+        <br><br>
+        <div id="result1"></div>
+        <div id="result2"></div>
+        <!-- <canvas id="roulletdraw" width="400" height="400"></canvas> -->
+        
+        
+        <a href="../技術検証2/roullete.html">やり直す</a>
+    </div>
+    <script src="../技術検証2/JS/roulette.js"></script>
+    
+        
+</body>
+</html>
