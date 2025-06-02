@@ -40,18 +40,18 @@ body {
     <div class="top">
         <h1>へたっぴさ　欲望の解放のさせ方が下手</h1>
         
-    <h4 class="info">ルーレットを当てて手持ちを100000にしよう!</h4>
+    <h4 class="info">ルーレットを当てて手持ちを100000円にしよう!</h4>
         <br>
         <h3>貴方の手持ち額:</h3>
         <h3 ><span id="yourMoney">10000</span>円</h3>
         
-        <p>掛け金を入力してください</p>
+        <p>賭け金を入力してください</p>
         <label>
             <input type="number" id="bet" min="1" value="1000"><br>
         </label>
         
        <h3>
-           掛ける目を選択して下さい<p></p>
+           賭ける目を選択して下さい<p></p>
        </h3>
 
         <h6>賭ける目の値が大きいほど当たりづらく、リターンが大きくなります</h6>
@@ -137,10 +137,10 @@ function determineResult(outcome, betNumber, betAmount) {
     yourMoney.innerHTML = (money);
 
     if (money <= 0) {
-        display2.innerHTML = "手持ち額が0円になりました。ページを読み込んで再挑戦するか、労働をしてください。";
+        alert ("手持ち額が0円になりました。\nページを読み込んで再挑戦するか、地下チンチロをしてください。");
     }
     else if (money >= 100000) {
-        display2.innerHTML = "おめでとうございます！手持ちが100000となりました!!!";
+        display2.innerHTML = "おめでとうございます！手持ちが100000円となりました!!!";
     }
     else {
         display2.innerHTML = "";
