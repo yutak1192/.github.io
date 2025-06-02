@@ -4,7 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ＲＯＵＬＥＴＴＥ</title>
-    <link rel="stylesheet" href="../技術検証2/CSS/roulette.CSS">
+    <style>
+        
+body {
+    background-color: thistle;
+    text-align: center;
+}
+#result2 {
+    color: #e60000, #f39800, #fff100, #009944, #0068b7, #1d2088, #920783, #e60000;
+    animation: 1s top linear infinite;
+}
+
+@keyframes top {
+    0% { background: #e60000}
+    14% {background: #f39800}
+    28% {background: #fff100}
+    42% { background: #009944}
+    56% { background: #0068b7}
+    70% {background: #1d2088}
+    85% {background: #920783}
+    100% { background: #e60000}
+}
+
+#start {
+    font-size: 15px;
+    border-radius: 100vh;
+    background-color: green;
+    color: aliceblue;
+}
+
+
+    </style>
 </head>
 <body>
     <div class="top">
@@ -107,10 +137,10 @@ function determineResult(outcome, betNumber, betAmount) {
     yourMoney.innerHTML = (money);
 
     if (money <= 0) {
-        display2.innerHTML = "手持ち額が0円になりました。ページを読み込んで再挑戦するか、帝愛グループのシェルター建設のために地下労働をしてください。";
+        display2.innerHTML = "手持ち額が0円になりました。ページを読み込んで再挑戦するか、労働をしてください。";
     }
     else if (money >= 100000) {
-        display2.innerHTML = "おめでとうございます！手持ちが100000となり一日外出権を手に入れました!!!";
+        display2.innerHTML = "おめでとうございます！手持ちが100000となりました!!!";
     }
     else {
         display2.innerHTML = "";
