@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>技術検証_おみくじ</title>
+    <!-- <link rel="stylesheet" href="CSS/技術検証.css"> -->
+<style>
+
+    @charset "UTF-8";
+* {
+    background-color: thistle;
+  
+}
+
+.mini {
+    font-size: 8px;
+}
+#you{
+    color: red;
+}
+
+.big{
+    font-size: 50px; 
+    text-align: center;   
+}
+.mid{
+    text-align: center;
+}
+
+.link {
+    position: right 0;
+}
+
+#btn {
+    border-radius: 100vh;
+    background-color: green;
+    color: aliceblue;
+}
+#btn2{
+    border-radius: 1000vh;
+    background-color: crimson;
+    color: aliceblue;
+}
+#detail{size: 90px;}
+
+</style>
+</head>
+<body>
+
+    <h1 class="big">御神籤<span class="mini">おみくじってこういう字かくんだね</span></h1>
+
+
+    <div class="mid">
+        <button id=btn>運勢を占う</button><br>
+        あなたの今日の運勢は...<div id="you"></div>です！
+        <br>
+        <br>
+        <button id="btn2">おみくじを開ける</button>
+        <p>※諸説あります</p>
+        <div id="details"></div>
+        <div id="details2"></div>
+        <br>
+        <h5>
+            <a href="omikuji.html" class="link">もう一度引く</a>
+        </h5>
+        <!-- <script src="JS/omikuji.js">
+        </script> -->
+        <script>
+            //変数の定義
+let y = document.getElementById("you");//運勢を表示する場所の情報を取得
+let btn1 = document.getElementById("btn");//ボタン1の情報を取得
+let btn2 = document.getElementById("btn2");//ボタン2の情報を取得
+let dt = document.getElementById("details");//イラストを表示する場所
+let dt2 = document.getElementById("details2");//中身を表示する場所
+let torf = false;
+
+
+//大吉～大凶の表示する画像の定義
+let img1 = document.createElement("img");
+img1.src = "omikuji_daikichi.png";
+let img2 = document.createElement("img");
+img2.src = "omikuji_kichi.png";
+let img3 = document.createElement("img");
+img3.src = "omikuji_chuukichi.png";
+let img4 = document.createElement("img");
+img4.src = "omikuji_syoukichi.png";
+let img5 = document.createElement("img");
+img5.src = "omikuji_suekichi.png";
+let img6 = document.createElement("img");
+img6.src = "omikuji_kyou.png";
+let img7 = document.createElement("img");
+img7.src = "omikuji_daikyou.png";
+
+
+//配列の作成
+const list = [
+    //配列に追加（吉）
+    {
+        fortune: "大吉",
+        detail: "おめでとうございます!!!<br>今日は貴方にとって素晴らしいことが起こるでしょう<br>しらんけど",
+        
+    },
+    {
+        fortune: "吉",
+        detail: "おめでとうございます!<br>吉って響き的にあんまり当たりっぽくないですよね<br>でも一般的には大吉の次に当たりなんですよ",
+
+    },
+    {
+        fortune: "中吉",
+        detail: "まぁ..おめでとうございます<br>おみくじの効果は次のおみくじを引くまでの間続くらしいです<br>安易な引き直しは禁物かもしれませんね"
+    },
+    {
+        fortune: "小吉",
+        detail: "はい、おめでとう<br>小吉は「末吉よりはマシ」という立ち位置で「ささやかな幸せがある」とのことです<br>逆にあんまり小吉って引かなくないですか？"
+    },
+    {
+        fortune: "末吉",
+        detail: "よかったね<br>吉の中では最低ですが、それゆえに「末広がりで運が好転していく」という意味でもあります。<br>いいことあるといいね"
+    },
+    //配列に追加（凶）
+    {
+        fortune: "凶",
+        detail: "関内ってご飯食べるところ多くて困っちゃいますよね～　え、運勢？<br>いま運勢とかそういう話する気分じゃない"
+    },
+    { fortune: "大凶", detail: "うるせーな<br>大凶のやつに言うことなんかねーよ" }
+];
+
+
+//ランダム抽出の定義
+const randomIndex = Math.floor(Math.random() * list.length);
+const result = list[randomIndex];
+
+//「運勢を占う」ボタンの定義
+btn1.onclick = function () {
+    //listの中身を100ミリ秒毎に表示（ルーレット）
+    let i = 0;
+    const interval = setInterval(() => {
+        const currentFortune = list[i % list.length].fortune;
+        y.innerHTML = currentFortune;
+        i++;
+    }, 100);
+
+    // 1.5秒後に結果決定
+    setTimeout(() => {
+        clearInterval(interval);
+        // 結果を画面に表示
+        y.innerHTML = `<span style="font-size: 1.5em; font-weight: bold;">${result.fortune}</span>`;
+    }, 1500); // ルーレット継続：1.5秒
+    torf = true;
+}
+
+//「結果を表示」ボタンの定義
+btn2.onclick = function () {
+    //btn1を押さなかった処理
+    if (torf === false) {
+        alert("先におみくじを引いてください。この愚か者め");
+        //result.fortuneに対応した文言を出力
+    } else {
+        dt2.innerHTML = (result.detail);
+        //運勢に応じた画像の添付
+        if (result.fortune == "大吉") {
+            dt.appendChild(img1);
+
+        }
+        else if (result.fortune == "吉") {
+            dt.appendChild(img2);
+        }
+        else if (result.fortune == "中吉") {
+            dt.appendChild(img3);
+        }
+        else if (result.fortune == "小吉") {
+            dt.appendChild(img4);
+        }
+        else if (result.fortune == "末吉") {
+            dt.appendChild(img5);
+        }
+        else if (result.fortune == "凶") {
+            dt.appendChild(img6);
+        }
+        else if (result.fortune == "大凶") {
+            dt.appendChild(img7);
+        }
+    }
+
+}
+        </script>
+    </div>
+</body>
+</html>
+
