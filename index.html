@@ -1,154 +1,191 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ＲＯＵＬＥＴＴＥ</title>
-    <style>
-        
-body {
+    <title>技術検証_おみくじ</title>
+    <!-- <link rel="stylesheet" href="CSS/技術検証.css"> -->
+<style>
+
+    @charset "UTF-8";
+* {
     background-color: thistle;
+  
+}
+
+.mini {
+    font-size: 8px;
+}
+#you{
+    color: red;
+}
+
+.big{
+    font-size: 50px; 
+    text-align: center;   
+}
+.mid{
     text-align: center;
 }
-#result2 {
-    color: #e60000, #f39800, #fff100, #009944, #0068b7, #1d2088, #920783, #e60000;
-    animation: 1s top linear infinite;
+
+.link {
+    position: right 0;
 }
 
-@keyframes top {
-    0% { background: #e60000}
-    14% {background: #f39800}
-    28% {background: #fff100}
-    42% { background: #009944}
-    56% { background: #0068b7}
-    70% {background: #1d2088}
-    85% {background: #920783}
-    100% { background: #e60000}
-}
-
-#start {
-    font-size: 15px;
+#btn {
     border-radius: 100vh;
     background-color: green;
     color: aliceblue;
 }
+#btn2{
+    border-radius: 1000vh;
+    background-color: crimson;
+    color: aliceblue;
+}
+#detail{size: 90px;}
 
-
-    </style>
+</style>
 </head>
 <body>
-    <div class="top">
-        <h1>へたっぴさ　欲望の解放のさせ方が下手</h1>
-        
-    <h4 class="info">ルーレットを当てて手持ちを100000円にしよう!</h4>
+
+    <h1 class="big">御神籤<span class="mini">おみくじってこういう字かくんだね</span></h1>
+
+
+    <div class="mid">
+        <button id=btn>運勢を占う</button><br>
+        あなたの今日の運勢は...<div id="you"></div>です！
         <br>
-        <h3>貴方の手持ち額:</h3>
-        <h3 ><span id="yourMoney">10000</span>円</h3>
-        
-        <p>賭け金を入力してください</p>
-        <label>
-            <input type="number" id="bet" min="1" value="1000"><br>
-        </label>
-        
-       <h3>
-           賭ける目を選択して下さい<p></p>
-       </h3>
-
-        <h6>賭ける目の値が大きいほど当たりづらく、リターンが大きくなります</h6>
-        <label for="select_bet">
-            <select id="selected_bet" name="choise">
-            <option value="1">1</option>
-			<option value="3">3</option>
-			<option value="5">5</option>
-			<option value="10">10</option>
-			<option value="20">20</option>
-		</select></label><br>
-        
-        <button onclick="startRoulette()" id="start">スタート</button>
-        <br><br>
-        <div id="result1"></div>
-        <div id="result2"></div>
-        <!-- <canvas id="roulletdraw" width="400" height="400"></canvas> -->
-        
-        
-        <a href="index.html">やり直す</a>
-    </div>
-    <!-- <script src="../技術検証2/JS/roulette.js"></script> -->
-    <script>
-        let money = 10000;
-const outcomes = [1, 1, 1, 1, 3, 3, 3, 5, 5, 10, 20];
-let intervalId = null;
-const display = document.getElementById("result1");
-const display2 = document.getElementById("result2");
-const yourMoney = document.getElementById("yourMoney");
+        <br>
+        <button id="btn2">おみくじを開ける</button>
+        <p>※諸説あります</p>
+        <div id="details"></div>
+        <div id="details2"></div>
+        <br>
+        <h5>
+            <a href="omikuji.html" class="link">もう一度引く</a>
+        </h5>
+        <!-- <script src="JS/omikuji.js">
+        </script> -->
+        <script>
+            //変数の定義
+let y = document.getElementById("you");//運勢を表示する場所の情報を取得
+let btn1 = document.getElementById("btn");//ボタン1の情報を取得
+let btn2 = document.getElementById("btn2");//ボタン2の情報を取得
+let dt = document.getElementById("details");//イラストを表示する場所
+let dt2 = document.getElementById("details2");//中身を表示する場所
+let torf = false;
 
 
-//ボタンを押すことで動作する処理
-function startRoulette() {
-    //賭け金と選んだ目の取得
-    const betAmount = parseInt(document.getElementById("bet").value);
-    const betNumber = parseInt(document.getElementById("selected_bet").value);
-    //例外処理
-    if (isNaN(betAmount) || betAmount <= 0) {
-        alert("賭け金を正しく入力してください。");
-        return;
-    }
-    if (betAmount > money) {
-        alert("賭け金が手持ちのお金を超えています\n身の程をわきまえてください");
-        return;
-    }
+//大吉～大凶の表示する画像の定義
+let img1 = document.createElement("img");
+img1.src = "omikuji_daikichi.png";
+let img2 = document.createElement("img");
+img2.src = "omikuji_kichi.png";
+let img3 = document.createElement("img");
+img3.src = "omikuji_chuukichi.png";
+let img4 = document.createElement("img");
+img4.src = "omikuji_syoukichi.png";
+let img5 = document.createElement("img");
+img5.src = "omikuji_suekichi.png";
+let img6 = document.createElement("img");
+img6.src = "omikuji_kyou.png";
+let img7 = document.createElement("img");
+img7.src = "omikuji_daikyou.png";
 
-    //毎回ルーレットをさせるためにここで宣言
-    let count = 0;
-    if (intervalId) clearInterval(intervalId);
-    intervalId = setInterval(() => {
-        const random = outcomes[Math.floor(Math.random() * outcomes.length)];
-        display.innerHTML = random;
-        count++;
-        //中身が30回表示されたら(1.5秒後)
-        if (count > 30) {
-            clearInterval(intervalId);
-            //倍率の計算メソッド
-            determineResult(random, betNumber, betAmount);
-        }
-    }, 50);
+
+//配列の作成
+const list = [
+    //配列に追加（吉）
+    {
+        fortune: "大吉",
+        detail: "おめでとうございます!!!<br>今日は貴方にとって素晴らしいことが起こるでしょう<br>しらんけど",
+        
+    },
+    {
+        fortune: "吉",
+        detail: "おめでとうございます!<br>吉って響き的にあんまり当たりっぽくないですよね<br>でも一般的には大吉の次に当たりなんですよ",
+
+    },
+    {
+        fortune: "中吉",
+        detail: "まぁ..おめでとうございます<br>おみくじの効果は次のおみくじを引くまでの間続くらしいです<br>安易な引き直しは禁物かもしれませんね"
+    },
+    {
+        fortune: "小吉",
+        detail: "はい、おめでとう<br>小吉は「末吉よりはマシ」という立ち位置で「ささやかな幸せがある」とのことです<br>逆にあんまり小吉って引かなくないですか？"
+    },
+    {
+        fortune: "末吉",
+        detail: "よかったね<br>吉の中では最低ですが、それゆえに「末広がりで運が好転していく」という意味でもあります。<br>いいことあるといいね"
+    },
+    //配列に追加（凶）
+    {
+        fortune: "凶",
+        detail: "関内ってご飯食べるところ多くて困っちゃいますよね～　え、運勢？<br>いま運勢とかそういう話する気分じゃない"
+    },
+    { fortune: "大凶", detail: "うるせーな<br>大凶のやつに言うことなんかねーよ" }
+];
+
+
+//ランダム抽出の定義
+const randomIndex = Math.floor(Math.random() * list.length);
+const result = list[randomIndex];
+
+//「運勢を占う」ボタンの定義
+btn1.onclick = function () {
+    //listの中身を100ミリ秒毎に表示（ルーレット）
+    let i = 0;
+    const interval = setInterval(() => {
+        const currentFortune = list[i % list.length].fortune;
+        y.innerHTML = currentFortune;
+        i++;
+    }, 100);
+
+    // 1.5秒後に結果決定
+    setTimeout(() => {
+        clearInterval(interval);
+        // 結果を画面に表示
+        y.innerHTML = `<span style="font-size: 1.5em; font-weight: bold;">${result.fortune}</span>`;
+    }, 1500); // ルーレット継続：1.5秒
+    torf = true;
 }
 
-//倍率の計算を行う
-function determineResult(outcome, betNumber, betAmount) {
-
-    if (outcome === betNumber) {
-        const payoutRate = {
-            1: 1.2,
-            3: 2,
-            5: 3,
-            10: 6,
-            20: 15
-        };
-        //当たりの目を加算し、負けは減算する
-        const winAmount = Math.floor(betAmount * payoutRate[betNumber]);
-        money += winAmount;
-        display.innerHTML = `当たり！ ${winAmount} 円獲得しました！`;
+//「結果を表示」ボタンの定義
+btn2.onclick = function () {
+    //btn1を押さなかった処理
+    if (torf === false) {
+        alert("先におみくじを引いてください。この愚か者め");
+        //result.fortuneに対応した文言を出力
     } else {
-        money -= betAmount;
-        display.innerHTML = ` ハズレ... ${betAmount} 円失いました。笑`;
-         }
- //手持ち金額の変更
-    yourMoney.innerHTML = (money);
+        dt2.innerHTML = (result.detail);
+        //運勢に応じた画像の添付
+        if (result.fortune == "大吉") {
+            dt.appendChild(img1);
 
-    if (money <= 0) {
-        alert ("手持ち額が0円になりました。\nページを読み込んで再挑戦するか、地下チンチロをしてください。");
-    }
-    else if (money >= 100000) {
-        display2.innerHTML = "おめでとうございます！手持ちが100000円となりました!!!";
-    }
-    else {
-        display2.innerHTML = "";
+        }
+        else if (result.fortune == "吉") {
+            dt.appendChild(img2);
+        }
+        else if (result.fortune == "中吉") {
+            dt.appendChild(img3);
+        }
+        else if (result.fortune == "小吉") {
+            dt.appendChild(img4);
+        }
+        else if (result.fortune == "末吉") {
+            dt.appendChild(img5);
+        }
+        else if (result.fortune == "凶") {
+            dt.appendChild(img6);
+        }
+        else if (result.fortune == "大凶") {
+            dt.appendChild(img7);
+        }
     }
 
 }
-
-    </script>
-        
+        </script>
+    </div>
 </body>
 </html>
+
